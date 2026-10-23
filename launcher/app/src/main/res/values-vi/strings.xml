@@ -112,4 +112,25 @@
     <string name="race_countdown_hours">%1$d giờ %2$d phút</string>
     <string name="race_countdown_days">%1$d ngày %2$d giờ</string>
     <string name="last_opened">Mở lần cuối %1$s</string>
+
+    <!-- Chế độ trẻ em -->
+    <string name="kids_mode">Chế độ Trẻ Em</string>
+    <string name="kids_mode_on">Trẻ em: còn %1$d phút</string>
+    <string name="kids_mode_select_time">Chọn thời gian xem</string>
+    <string name="kids_mode_enter_pin">Nhập mã PIN</string>
+    <string name="kids_mode_wrong_pin">Mã PIN không đúng. Vui lòng thử lại.</string>
+    <string name="kids_mode_unlocked">Đã mở khóa Chế độ Trẻ Em</string>
+    <string name="kids_mode_activated">Đã bật Chế độ Trẻ Em (%1$d phút)</string>
+    <string name="kids_mode_deactivated">Đã tắt Chế độ Trẻ Em</string>
+    <string name="kids_mode_15m">15 phút</string>
+    <string name="kids_mode_30m">30 phút</string>
+    <string name="kids_mode_45m">45 phút</string>
+    <string name="kids_mode_60m">60 phút</string>
+    <string name="kids_mode_120m">2 giờ</string>
+    <string name="kids_mode_turn_off">Tắt Chế độ Trẻ Em</string>
+
+    <!-- Lịch âm -->
+    <string name="lunar_date_format">%1$d/%2$d %3$s</string>
+    <string name="lunar_suffix">ÂL</string>
+    <string name="lunar_leap_suffix">ÂL (Nhuận)</string>
 </resources>

@@ -141,4 +141,25 @@
     <!-- Cinematic top shelf (cinematic_home): the line under the focused dock app's name; %1$s is when it was
          last opened, e.g. "5 minutes ago" or "yesterday, 9:40 pm". -->
     <string name="last_opened">Last opened %1$s</string>
+
+    <!-- Kids mode -->
+    <string name="kids_mode">Kids Mode</string>
+    <string name="kids_mode_on">Kids Mode: %1$d min remaining</string>
+    <string name="kids_mode_select_time">Set Screen Time</string>
+    <string name="kids_mode_enter_pin">Enter PIN</string>
+    <string name="kids_mode_wrong_pin">Incorrect PIN. Try again.</string>
+    <string name="kids_mode_unlocked">Kids Mode Unlocked</string>
+    <string name="kids_mode_activated">Kids Mode activated (%1$d min)</string>
+    <string name="kids_mode_deactivated">Kids Mode turned off</string>
+    <string name="kids_mode_15m">15 minutes</string>
+    <string name="kids_mode_30m">30 minutes</string>
+    <string name="kids_mode_45m">45 minutes</string>
+    <string name="kids_mode_60m">60 minutes</string>
+    <string name="kids_mode_120m">2 hours</string>
+    <string name="kids_mode_turn_off">Turn off Kids Mode</string>
+
+    <!-- Lunar calendar -->
+    <string name="lunar_date_format">%1$d/%2$d %3$s</string>
+    <string name="lunar_suffix">Lunar</string>
+    <string name="lunar_leap_suffix">Lunar (Leap)</string>
 </resources>

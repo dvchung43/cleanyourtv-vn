@@ -201,6 +201,21 @@
                         android:includeFontPadding="false"
                         android:visibility="gone" />
 
+                    <!-- Lunar date ("14/9 ÂL"), shown when lunar_date is on. -->
+                    <TextView
+                        android:id="@+id/lunarDate"
+                        android:gravity="right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="#E6FFFFFF"
+                        android:textSize="15sp"
+                        android:fontFamily="@string/font_medium"
+                        android:letterSpacing="0.04"
+                        android:includeFontPadding="false"
+                        android:visibility="gone" />
+
                     <TextClock
                         android:id="@+id/date"
                         android:gravity="right"
@@ -314,6 +329,8 @@
                 android:layout_marginBottom="6dp"
                 android:clipChildren="false"
                 android:clipToPadding="false"
+                android:baselineAligned="false"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -329,6 +346,15 @@
                     android:visibility="gone"
                     android:contentDescription="@string/app_library"
                     android:drawableStart="@drawable/ic_apps"
+                    android:nextFocusDown="@+id/grid" />
+
+                <TextView
+                    android:id="@+id/btnKids"
+                    style="@style/TopButtonIcon"
+                    android:visibility="gone"
+                    android:contentDescription="@string/kids_mode"
+                    android:drawableStart="@drawable/ic_lock"
+                    android:layout_gravity="center_vertical"
                     android:nextFocusDown="@+id/grid" />
 
                 <TextView
@@ -387,4 +413,72 @@
         android:layout_height="10dp"
         android:alpha="0"
         android:importantForAccessibility="no" />
+
+    <!-- Kids mode: Curtain lock overlay & PIN pad. Black screen covering everything when locked. -->
+    <FrameLayout
+        android:id="@+id/kidsLockOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF000000"
+        android:focusable="true"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/kidsPinContainer"
+            android:layout_width="440dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:background="@drawable/glass_panel"
+            android:padding="28dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/kids_mode"
+                android:textColor="#FFFFFFFF"
+                android:textSize="22sp"
+                android:fontFamily="@string/font_medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/kids_mode_enter_pin"
+                android:textColor="#A6FFFFFF"
+                android:textSize="14sp"
+                android:fontFamily="@string/font_regular" />
+
+            <TextView
+                android:id="@+id/kidsPinDots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="○   ○   ○   ○   ○   ○"
+                android:textColor="#FFFFFFFF"
+                android:textSize="24sp"
+                android:fontFamily="@string/font_medium" />
+
+            <TextView
+                android:id="@+id/kidsPinError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/kids_mode_wrong_pin"
+                android:textColor="#FFFF5252"
+                android:textSize="13sp"
+                android:visibility="invisible" />
+
+            <GridLayout
+                android:id="@+id/kidsKeypad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:columnCount="3"
+                android:rowCount="4" />
+        </LinearLayout>
+    </FrameLayout>
 </FrameLayout>

@@ -3,7 +3,9 @@ package com.gathin.tvhome;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.widget.GridLayout;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -167,6 +169,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     /** The pills have been filled in once; later resumes refresh them after the first frame. */
     private boolean pillsShown;
     private TextView shamsiDate;
+    private TextView lunarDate;
     private TextView stats;
     private List<RaceWeekend.Race> raceCalendar;
     private View racePanel;
@@ -174,6 +177,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     /** config.xml show_stats, overridable by a theme. Off: the line is gone and nothing is read. */
     private boolean showStats;
     private boolean shamsi;
+    private boolean lunar;
+    private int lunarUtcOffset;
     /** greeting_name: said after the greeting, which is shown in capitals. */
     private String greetingName = "";
     /** Optional time-of-day backdrop (config.xml, sky_intensity); 0 keeps it hidden. */
@@ -248,6 +253,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     /** fill_dock false: how many dock slots held an app when reorder mode started. */
     private int dockedAtStart;
     private View btnReorder;
+    private TextView btnKids;
+    private KidsLockManager kidsLockManager;
     /** dock_apps as loaded (config.xml or a theme): a saved Order only applies while these are unchanged. */
     private List<String> dockApps;
     /** fill_dock false: the dock can have empty slots, which reorder mode leaves out and restores afterwards. */
@@ -328,6 +335,10 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             if (festive) updateWifiLabel();
             sky.update();
             wallpaperPlayer.update();
+            if (kidsLockManager != null && kidsLockManager.isActive()) {
+                kidsLockManager.updateLockState();
+                updateKidsButtonState();
+            }
             handler.postDelayed(this, MINUTE_MS);
         }
     };
@@ -421,12 +432,22 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         raceSessions = findViewById(R.id.raceSessions);
         showStats = cfg.showStats;
         shamsi = cfg.shamsiDate;
+        lunarDate = findViewById(R.id.lunarDate);
+        lunar = cfg.lunarDate;
+        lunarUtcOffset = cfg.lunarUtcOffset;
         greetingName = cfg.greetingName;
         if (shamsi) {
             shamsiDate.setVisibility(View.VISIBLE);
             TextView date = findViewById(R.id.date);
             date.setTextSize(11f);
             date.setPadding(0, (int) (4 * density), 0, 0);
+        } else if (lunar && lunarDate != null) {
+            lunarDate.setVisibility(View.VISIBLE);
+            TextView date = findViewById(R.id.date);
+            if (date != null) {
+                date.setTextSize(11f);
+                date.setPadding(0, (int) (4 * density), 0, 0);
+            }
         }
         vpnApp = cfg.vpnApp;
         moduleCards = cfg.moduleCards;
@@ -585,6 +606,23 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             libraryFromTopBar = true;   // closing it goes back to this button, not to the pill after the last row
         });
         btnLibraryTop.setVisibility(cfg.libraryButton && cfg.appLibrary ? View.VISIBLE : View.GONE);
+        kidsLockManager = new KidsLockManager(this);
+        View lockOverlay = findViewById(R.id.kidsLockOverlay);
+        View pinContainer = findViewById(R.id.kidsPinContainer);
+        TextView pinDots = findViewById(R.id.kidsPinDots);
+        TextView pinError = findViewById(R.id.kidsPinError);
+        GridLayout keypad = findViewById(R.id.kidsKeypad);
+        if (lockOverlay != null) {
+            kidsLockManager.bindViews(lockOverlay, pinContainer, pinDots, pinError, keypad);
+        }
+        btnKids = findViewById(R.id.btnKids);
+        if (cfg.kidsMode) {
+            btnKids.setVisibility(View.VISIBLE);
+            btnKids.setOnClickListener(v -> onKidsModeClicked());
+            updateKidsButtonState();
+        } else if (btnKids != null) {
+            btnKids.setVisibility(View.GONE);
+        }
         iconOnlyButtons = cfg.iconOnlyButtons;
         topMenu = cfg.topMenu;
         wifiIconOnly = iconOnlyButtons && cfg.wifiLabelWidth <= 0;
@@ -636,8 +674,13 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         btnSettings.setOnKeyListener(pillKeys);
         btnReorder.setOnKeyListener(pillKeys);
         btnLibraryTop.setOnKeyListener(pillKeys);
+        if (btnKids != null) {
+            btnKids.setFocusable(true);
+            btnKids.setOnKeyListener(pillKeys);
+        }
         if (advancedEffects) {
-            for (View button : new View[]{btnInputs, btnWifi, btnReorder, btnLibraryTop, btnSettings}) {
+            for (View button : new View[]{btnInputs, btnWifi, btnReorder, btnLibraryTop, btnKids, btnSettings}) {
+                if (button == null) continue;
                 button.setOnFocusChangeListener((view, focused) -> view.animate()
                         .scaleX(focused ? 1.04f : 1f).scaleY(focused ? 1.04f : 1f)
                         .setDuration(reducedMotion ? Motion.REDUCED_MS : 160).start());
@@ -736,6 +779,10 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        if (kidsLockManager != null) {
+            kidsLockManager.updateLockState();
+            updateKidsButtonState();
+        }
         if (openLauncherSettingsIfAsked(intent)) return;
         if (openInputsIfAsked(intent)) return;
         if (intent == null || !intent.hasCategory(Intent.CATEGORY_HOME)) return;
@@ -768,6 +815,10 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     protected void onResume() {
         super.onResume();
+        if (kidsLockManager != null) {
+            kidsLockManager.updateLockState();
+            updateKidsButtonState();
+        }
         // A festival that started or ended while Home was in the background: rebuild with or without it.
         if (festive != festival.active(LocalDate.now())) {
             recreate();
@@ -1038,6 +1089,78 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         return false;
     }
 
+    void updateKidsButtonState() {
+        if (btnKids == null || kidsLockManager == null) return;
+        if (kidsLockManager.isActive()) {
+            btnKids.setAlpha(1.0f);
+            btnKids.setContentDescription(getString(R.string.kids_mode_on, kidsLockManager.getRemainingMinutes()));
+        } else {
+            btnKids.setAlpha(0.6f);
+            btnKids.setContentDescription(getString(R.string.kids_mode));
+        }
+    }
+
+    private void onKidsModeClicked() {
+        if (kidsLockManager == null) return;
+        if (kidsLockManager.isActive()) {
+            showKidsActiveMenu();
+        } else {
+            showKidsTimePickerDialog();
+        }
+    }
+
+    private void showKidsActiveMenu() {
+        View anchor = btnKids != null ? btnKids : findViewById(R.id.btnSettings);
+        View panel = getLayoutInflater().inflate(R.layout.popup_inputs, root, false);
+        LinearLayout rows = panel.findViewById(R.id.rows);
+        PopupWindow popup = glassPopup(panel, (int) (240 * density));
+
+        String remaining = getString(R.string.kids_mode_on, kidsLockManager.getRemainingMinutes());
+        addInputRow(rows, popup, R.drawable.ic_lock, remaining, -1, () -> {});
+        addInputRow(rows, popup, R.drawable.ic_lock, getString(R.string.kids_mode_turn_off), -1, () -> {
+            kidsLockManager.showPinDialog();
+        });
+
+        panel.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        popup.setWidth(Math.max((int) (240 * density), panel.getMeasuredWidth()));
+        dropIn(popup, panel, anchor, getResources().getBoolean(R.bool.rtl_menu_bar) ? Gravity.START : Gravity.END);
+        if (rows.getChildCount() > 1) {
+            rows.getChildAt(1).requestFocus();
+        }
+    }
+
+    private void showKidsTimePickerDialog() {
+        View anchor = btnKids != null ? btnKids : findViewById(R.id.btnSettings);
+        View panel = getLayoutInflater().inflate(R.layout.popup_inputs, root, false);
+        LinearLayout rows = panel.findViewById(R.id.rows);
+        PopupWindow popup = glassPopup(panel, (int) (220 * density));
+
+        int[] minutes = {15, 30, 45, 60, 120};
+        int[] titles = {
+                R.string.kids_mode_15m,
+                R.string.kids_mode_30m,
+                R.string.kids_mode_45m,
+                R.string.kids_mode_60m,
+                R.string.kids_mode_120m
+        };
+
+        for (int i = 0; i < minutes.length; i++) {
+            final int mins = minutes[i];
+            addInputRow(rows, popup, R.drawable.ic_lock, getString(titles[i]), -1, () -> {
+                kidsLockManager.start(mins);
+                updateKidsButtonState();
+                Toast.makeText(this, getString(R.string.kids_mode_activated, mins), Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        panel.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        popup.setWidth(Math.max((int) (220 * density), panel.getMeasuredWidth()));
+        dropIn(popup, panel, anchor, getResources().getBoolean(R.bool.rtl_menu_bar) ? Gravity.START : Gravity.END);
+        if (rows.getChildCount() > 0) {
+            rows.getChildAt(0).requestFocus();
+        }
+    }
+
     // ---- reorder ---------------------------------------------------------------------------------
 
     /** Blue the glass turns while reorder mode is on. */
@@ -1052,6 +1175,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
      */
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
+        if (kidsLockManager != null && kidsLockManager.handleLockedKeyEvent(event)) return true;
         if (handleSettingsKey(event)) return true;
         if (!reordering) return super.dispatchKeyEvent(event);
         if (dockEditing) return dispatchDockEdit(event);
@@ -2138,6 +2262,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             greeting.setTextColor(greetingColor);
         }
         if (shamsi) shamsiDate.setText(Shamsi.today(getResources()));
+        if (lunar && lunarDate != null) lunarDate.setText(Lunar.today(getResources(), lunarUtcOffset));
     }
 
     // ---- race-weekend panel (a theme's race_calendar) -----------------------------------------------

@@ -57,9 +57,12 @@ is ignored, and a file that doesn't parse is ignored as a whole, so a theme can 
 | `wifi_label_width` | 0 to 300 | With `icon_only_buttons`, keep the network name on the Wi-Fi pill up to this width in dp, cut with an ellipsis; 0 leaves only the icon |
 | `library_button` | bool | The app library as a round button in the top bar, beside Settings; needs `app_library`. Closing the library returns to it |
 | `always_show_names` | bool | Names under every tile, dimmed until focused, the dock included (its band grows to hold them); `false` by default shows only the focused tile's name |
+| `kids_mode` | bool | Kids mode: screen time limits and dynamic `ddMMHH` PIN lock screen (`false` by default) |
 | `wallpaper_true_color` | bool | Decode wallpapers in 32-bit colour (8 MB at 1080p) instead of RGB_565 (4 MB), which bands dark gradients such as a night sky; for TVs with 2 GB or more (`false` by default) |
 | `app_library` | bool | An App library pill after the last Home row: every installed app, add one to Home or take it off (`false` by default). The choices stay on the TV when a theme is pushed or reset; see [docs/app-library.md](../docs/app-library.md) |
 | `shamsi_date` | bool | Show the Solar Hijri date above the Gregorian one |
+| `lunar_date` | bool | Show the Lunar (Âm lịch) date above the Gregorian date (`false` by default) |
+| `lunar_utc_offset` | integer | Time zone UTC offset for lunar calculation (`7` by default for Vietnam/SE Asia) |
 | `greeting_name` | string | A name after the greeting, e.g. `"Mr. Trịnh"` for GOOD MORNING, MR. TRỊNH; empty for the greeting alone |
 | `module_cards` | bool | Look for module cards and ask about them (`true`); `false` turns the feature off |
 | `reduced_motion` | bool | Calmer motion for weak GPUs: highlight settles in 5 frames, animations 90 ms or less, no fades, no tile entrance |

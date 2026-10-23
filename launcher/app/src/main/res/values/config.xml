@@ -17,10 +17,13 @@
 
     <!-- Apps pinned to the dock row at the bottom, in this order. Missing apps are skipped. -->
     <string-array name="dock_apps">
-        <item>com.netflix.ninja</item>
-        <item>com.amazon.amazonvideo.livingroom</item>
         <item>com.google.android.youtube.tv</item>
-        <item>in.startv.hotstar</item>
+        <item>org.smarttube.stable</item>
+        <item>com.teamsmart.videomanager.tv</item>
+        <item>vn.vtv.vtvgotv</item>
+        <item>com.vieon.tv</item>
+        <item>vng.zing.mp3</item>
+        <item>com.netflix.ninja</item>
     </string-array>
     <!-- With fewer dock_apps than columns (or a dock app that is not installed), the free dock slots take
          the first grid apps, so the dock never shows a gap. false leaves them empty (#162); a theme can
@@ -178,6 +181,11 @@
          Gregorian date. -->
     <bool name="shamsi_date">false</bool>
 
+    <!-- Show the Lunar (Âm lịch) date used in Vietnam and East Asia, e.g. "14/9 ÂL", above the
+         Gregorian date. -->
+    <bool name="lunar_date">true</bool>
+    <integer name="lunar_utc_offset">7</integer>
+
     <!-- A name after the greeting: "Mr. Trịnh" shows GOOD MORNING, MR. TRỊNH. Empty: the greeting alone. -->
     <string name="greeting_name" translatable="false"></string>
     <!-- Optional VPN app the network pill opens (hold the pill for Wi-Fi settings), e.g. the package of the
@@ -301,4 +309,8 @@
          colour washes down from the top edge and fades to black, brightest along the top). The cinematic shelf
          keeps its own glow. Can also be set with "glow_style": "horizon" in a theme's config.json. -->
     <string name="glow_style" translatable="false">radial</string>
+
+    <!-- Kids mode: screen time limits and dynamic ddMMHH PIN lock screen. Off by default.
+         Can also be set with "kids_mode": true in a theme's config.json. -->
+    <bool name="kids_mode">false</bool>
 </resources>
