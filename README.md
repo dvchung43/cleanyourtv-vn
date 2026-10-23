@@ -20,7 +20,70 @@
   <a href="docs/PRESS.md"><img src="docs/card.jpg" alt="225 TV models · 64 brands · 25 languages · 461 KB launcher. Featured in TechCrunch, TechRadar, Tom's Guide, Mashable, Android Authority, XDA, FlatpanelsHD, It's FOSS, Phandroid, GIGAZINE, Xataka, WinFuture, Frandroid, Macitynet, Techaeris, TechPP and 69 more: 85 articles from 23 countries. Before: stock Google TV home with a sponsored ad. After: the Clean Your TV launcher." width="800"></a>
 </p>
 
-**The viral tweet:** [x.com/gathint/status/2111379569030939102](https://x.com/gathint/status/2111379569030939102)
+<p align="center">
+  <a href="https://github.com/dvchung43/cleanyourtv-vn/releases/latest"><img src="https://img.shields.io/badge/Download%20APK-v1.0.0%20(Vietnam%20Edition)-2ea44f?style=for-the-badge&logo=android" alt="Tải APK CleanYourTV"></a>
+  <a href="#-hướng-dẫn-cài-đặt-trên-android-tv--google-tv"><img src="https://img.shields.io/badge/Hướng%20dẫn-Cài%20đặt%20chi%20tiết-0366d6?style=for-the-badge" alt="Hướng dẫn cài đặt"></a>
+</p>
+
+> [!TIP]
+> 🇻🇳 **Bản tùy biến CleanYourTV - Vietnam Edition**: Tích hợp sẵn **Lịch Âm Việt Nam**, tính năng **Khóa trẻ em (Kids Lock)**, mặc định ưu tiên ứng dụng Việt (**YouTube, SmartTube, VTV Go, VieON, Zing MP3**). Siêu nhẹ (<480 KB), không quảng cáo, hoạt động hoàn toàn offline bảo vệ quyền riêng tư!
+> 
+> 📥 **Tải trực tiếp file APK**: [CleanYourTV_Community_v1.0.apk (v1.0.0)](https://github.com/dvchung43/cleanyourtv-vn/releases/download/v1.0.0/CleanYourTV_Community_v1.0.apk)
+
+---
+
+## 🇻🇳 Hướng Dẫn Cài Đặt Trên Android TV / Google TV
+
+### 🟢 Bước 1: Bật chế độ nhà phát triển (Developer Options)
+1. Trên điều khiển TV, bấm nút **Cài đặt ⚙️**.
+2. Chọn **Hệ thống** (hoặc **Tùy chọn thiết bị**) ➔ **Giới thiệu** (About).
+3. Cuộn xuống dòng cuối tìm **Số bản dựng** (Android TV OS build).
+4. Bấm phím **OK liên tục 7 lần** cho đến khi màn hình hiện thông báo *"Bạn hiện là nhà phát triển!"*.
+
+<p align="center">
+  <img src="docs/install/01_enable_dev_mode.jpg" alt="Bật chế độ nhà phát triển" width="700">
+</p>
+
+---
+
+### 🟢 Bước 2: Cho phép cài đặt ứng dụng không xác định
+1. Vào **Cài đặt** ➔ chọn **Bảo mật và hạn chế** (hoặc **Ứng dụng** ➔ **Quyền truy cập đặc biệt**).
+2. Chọn **Cài đặt ứng dụng không xác định**.
+3. Chọn ứng dụng bạn dùng để cài (như **File Manager** nếu dùng USB, hoặc **Downloader**) ➔ Bật sang **BẬT (ON)**.
+
+<p align="center">
+  <img src="docs/install/02_unknown_sources.jpg" alt="Cài đặt ứng dụng không xác định" width="700">
+</p>
+
+---
+
+### 🟢 Bước 3A: Cài đặt qua USB (Dành cho ai có USB)
+1. Tải [CleanYourTV_Community_v1.0.apk](https://github.com/dvchung43/cleanyourtv-vn/releases/download/v1.0.0/CleanYourTV_Community_v1.0.apk) và chép vào USB.
+2. Cắm USB vào cổng TV.
+3. Mở một ứng dụng quản lý tệp bất kỳ trên TV (như *File Commander*, *X-plore*, hoặc *Trình quản lý tệp* có sẵn).
+4. Tìm đến USB ➔ Bấm vào file APK ➔ Chọn **Cài đặt (Install)**.
+
+<p align="center">
+  <img src="docs/install/03_usb_install.jpg" alt="Cài đặt qua USB" width="700">
+</p>
+
+---
+
+### 🟢 Bước 3B: Cài đặt trực tiếp qua ứng dụng Downloader (Không cần USB)
+1. Lên Google Play Store trên TV, tìm và cài đặt ứng dụng **Downloader** (của *AFTVnews*).
+2. Mở ứng dụng Downloader, nhập link tải trực tiếp:
+   ```text
+   https://github.com/dvchung43/cleanyourtv-vn/releases/download/v1.0.0/CleanYourTV_Community_v1.0.apk
+   ```
+3. Bấm **GO**, ứng dụng sẽ tự động tải file APK về. Khi tải xong hộp thoại hiện lên ➔ Bấm **Install (Cài đặt)** là hoàn tất.
+
+<p align="center">
+  <img src="docs/install/04_downloader_app.jpg" alt="Cài đặt qua ứng dụng Downloader" width="700">
+</p>
+
+---
+
+## The viral tweet: [x.com/gathint/status/2111379569030939102](https://x.com/gathint/status/2111379569030939102)
 
 On 17 October 2026 I posted a before and after of my parents' TV, cleaned up by Claude Code over Wi-Fi.
 It reached 7.4M views, people started doing the same to their own TVs, and their replies turned into
