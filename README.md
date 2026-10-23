@@ -34,7 +34,7 @@ Khác với giao diện gốc của TV tràn ngập quảng cáo đề xuất, g
 
 ### 🔒 2. Khóa Trẻ Em Thông Minh (Kids Lock)
 - **Bảo vệ bằng mã PIN:** Cho phép phụ huynh đặt mã khóa để ngăn con trẻ mở các ứng dụng giải trí hoặc thay đổi cài đặt khi chưa được phép.
-- **Mã PIN động linh hoạt:** Hỗ trợ quy tắc mã bảo mật thông minh theo ngày giờ `ddMMHH` (ví dụ: ngày 23 lúc 20 giờ mã là `2320`), giúp phụ huynh không sợ bị lộ mật khẩu cố định.
+- **Mã PIN động linh hoạt:** Hỗ trợ quy tắc mã bảo mật thông minh 6 số theo ngày giờ `ddMMHH` (ví dụ: ngày 23/10 lúc 16h mã PIN sẽ là `231016`, lúc 20h là `231020`), giúp phụ huynh không bao giờ sợ bị con trẻ nhìn trộm hay lộ mật khẩu cố định.
 - **Phím tắt mở nhanh bằng điều khiển:** Mở khóa tiện lợi thông qua tổ hợp phím remote (như bấm liên tiếp 5 lần phím Tắt tiếng / Mute).
 - **Giới hạn thời gian xem (Screen Time):** Giúp kiểm soát thời lượng xem TV khoa học cho các bạn nhỏ.
 
