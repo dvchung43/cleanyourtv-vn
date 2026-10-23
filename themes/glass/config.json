@@ -1,19 +1,27 @@
 {
+  "lunar_date": true,
+  "lunar_utc_offset": 7,
+  "weather": true,
+  "weather_place": "TP.HCM",
+  "weather_lat": 10.8231,
+  "weather_lon": 106.6297,
   "dock_apps": [
-    "com.netflix.ninja",
-    "com.google.android.youtube.tv",
-    "com.amazon.amazonvideo.livingroom",
-    "com.disney.disneyplus",
-    "com.wbd.stream",
-    "com.apple.atve.androidtv.appletv"
+    "org.smarttube.stable",
+    "vn.vtv.vtvgotv",
+    "com.vieon.tv",
+    "vng.zing.mp3"
   ],
-  "background_color": "#090C14",
+  "fill_dock": false,
+  "background_color": "#080C14",
   "wallpaper": true,
   "cinematic_home": true,
   "dock_glass": true,
   "icon_only_buttons": true,
   "app_glow": true,
-  "glow_style": "horizon",
+  "glow_style": "ambient",
+  "show_stats": true,
   "focus_overshoot": false,
-  "advanced_effects": true
+  "advanced_effects": true,
+  "app_library": true,
+  "kids_mode": true
 }
