@@ -310,7 +310,7 @@
          keeps its own glow. Can also be set with "glow_style": "horizon" in a theme's config.json. -->
     <string name="glow_style" translatable="false">radial</string>
 
-    <!-- Kids mode: screen time limits and dynamic ddMMHH PIN lock screen. Off by default.
-         Can also be set with "kids_mode": true in a theme's config.json. -->
-    <bool name="kids_mode">false</bool>
+    <!-- Kids mode: screen time limits and dynamic ddMMHH PIN lock screen. Enabled by default for VN edition.
+         Can also be toggled with "kids_mode" in a theme's config.json. -->
+    <bool name="kids_mode">true</bool>
 </resources>
